@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
@@ -14,5 +14,6 @@ public class ScheduleRequestDto {
     private String todo;
     private String name;
     private String password;
+    private LocalDate updated_at;
 
 }

@@ -5,6 +5,7 @@ import com.example.schedule.dto.ScheduleResponseDto;
 import com.example.schedule.entity.Schedule;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface ScheduleService {
     ScheduleResponseDto saveSchedule(ScheduleRequestDto dto);
 
     // 일정 전체 조회
-    List<ScheduleResponseDto> findAllSchedule();
+    List<ScheduleResponseDto> findAllSchedule(LocalDate updated_at, String name);
 
     // 일정 선택 조회
     ScheduleResponseDto findScheduleById(Long id);

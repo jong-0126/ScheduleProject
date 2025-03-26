@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -29,8 +31,10 @@ public class ScheduleController {
 
     //전체 일정 조회
     @GetMapping
-    public List<ScheduleResponseDto> findAllSchedule(){
-        return scheduleService.findAllSchedule();
+    public List<ScheduleResponseDto> findAllSchedule(
+            @RequestParam(value = "updated_at", required = false) LocalDate updated_at,
+            @RequestParam(value = "name", required = false) String name){
+        return scheduleService.findAllSchedule(updated_at, name);
     }
 
     //선택 일정 조회

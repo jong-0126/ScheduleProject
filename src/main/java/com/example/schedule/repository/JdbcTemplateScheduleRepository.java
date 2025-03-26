@@ -13,6 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -45,8 +48,12 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository{
 
     // 전체 일정 조회
     @Override
-    public List<ScheduleResponseDto> findAllSchedule() {
-        return jdbcTemplate.query("select * from schedule order by 2 desc", scheduleRowMapper());
+    public List<ScheduleResponseDto> findAllSchedule(LocalDate updated_at, String name) {
+        String formattedUpdatedAt = updated_at != null ? updated_at.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null;
+        // 수정일로 검색하면 수정일만 이용해서 검색
+        // 작성자명으로 검색하면 작성자명만 이용해서 검색
+        // 둘다 검색하면 둘다 이용해서 검색
+        return jdbcTemplate.query("select * from schedule where (? is null or date_format(date(updated_at),'%Y-%m-%d') = ?) and (? is null or name = ?) order by updated_at desc", scheduleRowMapper(), formattedUpdatedAt, formattedUpdatedAt, name, name);
     }
 
     private RowMapper<ScheduleResponseDto> scheduleRowMapper(){
