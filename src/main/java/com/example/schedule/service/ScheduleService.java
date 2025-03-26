@@ -20,7 +20,7 @@ public interface ScheduleService {
     ScheduleResponseDto findScheduleById(Long id);
 
     // 일정 선택 수정
-    ScheduleResponseDto updateSchedule(Long id, String todo, String name, LocalDateTime createdAt, LocalDateTime updatedAt);
+    ScheduleResponseDto updateSchedule(Long id, String todo, String name, String password);
 
     // 일정 선택 삭제
     void deleteSchedule(Long id);

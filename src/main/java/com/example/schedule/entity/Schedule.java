@@ -21,12 +21,4 @@ public class Schedule {
         this.name = name;
         this.password = password;
     }
-
-    public Schedule(Long id, String todo, String name, LocalDateTime createAt, LocalDateTime updateAt) {
-        this.id = id;
-        this.todo = todo;
-        this.name = name;
-        this.createdAt = createAt;
-        this.updatedAt = updateAt;
-    }
 }

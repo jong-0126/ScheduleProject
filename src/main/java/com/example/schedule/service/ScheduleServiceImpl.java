@@ -6,6 +6,7 @@ import com.example.schedule.entity.Schedule;
 import com.example.schedule.repository.ScheduleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -40,15 +41,30 @@ public class ScheduleServiceImpl implements ScheduleService{
         return new ScheduleResponseDto(schedule);
     }
 
+    @Transactional
     @Override
-    public ScheduleResponseDto updateSchedule(Long id, String todo, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ScheduleResponseDto updateSchedule(Long id, String todo, String name, String password) {
 
         // 필수값 검증
-        if (todo == null || name == null) {
+        if (todo == null && name == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title and content are required values.");
         }
 
-        return null;
+        Schedule findSchedule = scheduleRepository.findScheduleByIdOrElseThrow(id);
+
+        if(findSchedule.getPassword() == null || !findSchedule.getPassword().equals(password)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+        }
+
+        int updatedRow = scheduleRepository.updateSchedule(todo, name, id);
+
+        if(updatedRow == 0){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No data has been modified.");
+        }
+
+        Schedule schedule = scheduleRepository.findScheduleByIdOrElseThrow(id);
+
+        return new ScheduleResponseDto(schedule);
     }
 
     @Override

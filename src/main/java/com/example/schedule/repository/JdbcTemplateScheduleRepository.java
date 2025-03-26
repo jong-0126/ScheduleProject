@@ -80,12 +80,21 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository{
                         rs.getLong("id"),
                         rs.getString("todo"),
                         rs.getString("name"),
+                        rs.getString("password"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime()
                 );
             }
         };
     }
+
+    // 일정 선택 수정
+    @Override
+    public int updateSchedule(String todo, String name, Long id) {
+
+        return jdbcTemplate.update("update schedule set todo = if(? is null , todo, ?), name = if(? is null, name, ?) where id = ?",todo, todo, name, name, id);
+    }
+
 
     // 선택 삭제
     @Override
