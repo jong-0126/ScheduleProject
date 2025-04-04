@@ -21,6 +21,12 @@ Spring Boot을 이용하여 일정 관리 앱을 개발해 보았습니다. 다�
 
 ## 🛠️ 개발 과정
 
+### API 명세서
+https://documenter.getpostman.com/view/25125875/2sAYkKGxDf
+
+### ERD
+![image](https://github.com/user-attachments/assets/e8c4c79d-9750-4451-8c16-00ec6bab8f7a)
+
 ### Lv 1. 일정 생성 및 조회
 - **일정 생성(일정 작성하기)**
   - 일정 생성 시, 포함되어야할 데이터
